@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block container %}
+<form method="POST" action="/post/create/">
+    {% csrf_token %}
+    <label>标题</label>
+    <input type="text" name="title">
+    <hr>
+    <label>内容</label>
+    <textarea name="content"></textarea>
+
+    <input type="submit" name="提交">
+</form>
+{% endblock %}

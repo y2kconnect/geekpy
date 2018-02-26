@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GeekPy</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    {% block ext_css %}{% endblock %}
+</head>
+
+<body>
+    <div style="color: red">Navbar</div>
+    <div>{% block container %}{% endblock %}</div>
+    <div>{% block sidebar %}{% endblock %}</div>
+    <div style="color: blue">Footer</div>
+
+    <script type="text/javascript" src="/static/js/jquery.js"></script>
+    {% block ext_js %}{% endblock %}
+</body>
+</html>

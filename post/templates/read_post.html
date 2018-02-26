@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block container %}
+<div>{{post.title}}</div>
+<a href="/post/edit/?post_id={{post.id}}">修改</a>
+<div>{{post.date}}</div>
+<div>{{post.content}}</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block container %}
+    <ul>
+    {% for post in posts %}
+        <li><a href="/post/read/?post_id={{post.id}}">{{post.title}}</a></li>
+    {% endfor %}
+    </ul>
+
+    <div>
+        {% for page in pages %}
+        <a href="/post/list/?page={{page}}">{{page}}</a>
+        {% endfor %}
+    </div>
+{% endblock %}
