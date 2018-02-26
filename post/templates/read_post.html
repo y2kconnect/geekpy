@@ -1,8 +1,11 @@
 {% extends "base.html" %}
 
 {% block container %}
-<div>{{post.title}}</div>
-<a href="/post/edit/?post_id={{post.id}}">修改</a>
-<div>{{post.date}}</div>
-<div>{{post.content}}</div>
+<h2>{{post.title}}</h2>
+
+<div>{{post.date | date:"Y-m-d H:i:s"}} <a href="/post/edit/?post_id={{post.id}}">修改</a></div>
+<hr>
+<p>
+    {{post.content|safe|escape|linebreaks}}
+</p>
 {% endblock %}

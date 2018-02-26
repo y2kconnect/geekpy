@@ -1,18 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>GeekPy</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style type="text/css">
+        .block {}
+    </style>
     {% block ext_css %}{% endblock %}
 </head>
 
 <body>
-    <div style="color: red">Navbar</div>
-    <div>{% block container %}{% endblock %}</div>
-    <div>{% block sidebar %}{% endblock %}</div>
-    <div style="color: blue">Footer</div>
+    <!-- Navbar -->
+    <nav class="navbar navbar-inverse navbar-static-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">GeekPy</a>
+            </div>
+        </div>
+    </nav>
 
-    <script type="text/javascript" src="/static/js/jquery.js"></script>
+    <div class="container">
+        <div class="col-md-8">{% block container %}{% endblock %}</div>
+        <div class="col-md-4">
+            <div class="well">边栏</div>
+            <div class="well">你想写点啥</div>
+        </div>
+    </div>
+
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     {% block ext_js %}{% endblock %}
 </body>
 </html>

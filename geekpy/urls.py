@@ -18,6 +18,8 @@ from django.urls import path
 from post import views as post_views
 
 urlpatterns = [
+    path('', post_views.post_list),
+
     path('post/read/', post_views.read_post),
     path('post/create/', post_views.create_post),
     path('post/edit/', post_views.edit_post),

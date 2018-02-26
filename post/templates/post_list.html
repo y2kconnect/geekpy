@@ -1,15 +1,21 @@
 {% extends "base.html" %}
 
 {% block container %}
-    <ul>
-    {% for post in posts %}
-        <li><a href="/post/read/?post_id={{post.id}}">{{post.title}}</a></li>
-    {% endfor %}
-    </ul>
-
-    <div>
-        {% for page in pages %}
-        <a href="/post/list/?page={{page}}">{{page}}</a>
+    <div class="list-group">
+        {% for post in posts %}
+        <a class="list-group-item" href="/post/read/?post_id={{post.id}}">
+            <span class="text-info">{{post.date | date:"Y-m-d H:i:s"}}</span>
+            <strong>{{post.title}}</strong>
+        </a>
         {% endfor %}
     </div>
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            {% for n in pages %}
+            <li><a href="/post/list/?page={{n}}">{{n}}</a></li>
+            {% endfor %}
+        </ul>
+    </nav>
+
 {% endblock %}
