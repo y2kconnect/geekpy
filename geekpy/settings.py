@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'post',
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -133,3 +134,6 @@ CACHES = {
         }
     }
 }
+
+MEDIA_ROOT = 'medias'
+MEDIA_URL = '/medias/'

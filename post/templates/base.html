@@ -9,9 +9,6 @@
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <style type="text/css">
-        .block {}
-    </style>
     {% block ext_css %}{% endblock %}
 </head>
 
@@ -22,6 +19,15 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="/">GeekPy</a>
             </div>
+            <ul class="nav navbar-nav navbar-right">
+                {% if request.session.uid %}
+                <li><a>Hello, {{request.session.nickname}}</a></li>
+                <li><a href="/user/logout/">退出</a></li>
+                {% else %}
+                <li><a href="/user/register/">注册</a></li>
+                <li><a href="/user/login/">登陆</a></li>
+                {% endif %}
+            </ul>
         </div>
     </nav>
 
