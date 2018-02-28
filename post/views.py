@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from post.models import Post
 from post.helper import page_cache
 from post.helper import rds
+from post.helper import get_post_rank
 
 
 def create_post(request):
@@ -58,3 +59,8 @@ def post_list(request):
     posts = Post.objects.all()[start:end]
     return render(request, 'post_list.html',
                   {'posts': posts, 'pages': range(1, pages + 1)})
+
+
+def top10_posts(request):
+    top10 = get_post_rank(10)
+    return render(request, 'top10.html', {'top10': top10})

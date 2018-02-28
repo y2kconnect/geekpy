@@ -34,8 +34,13 @@
     <div class="container">
         <div class="col-md-8">{% block container %}{% endblock %}</div>
         <div class="col-md-4">
-            <div class="well">边栏</div>
-            <div class="well">你想写点啥</div>
+            <div class="well">
+                <h4>热门文章</h4>
+                <iframe src ="/post/top10/" frameborder="0" id="iFrame1" name="iFrame1"
+                        onload="this.height=iFrame1.document.body.scrollHeight">
+                <p>Your browser does not support iframes.</p>
+                </iframe>
+            </div>
         </div>
     </div>
 

@@ -28,6 +28,7 @@ urlpatterns = [
     path('post/create/', post_views.create_post),
     path('post/edit/', post_views.edit_post),
     path('post/list/', post_views.post_list),
+    path('post/top10/', post_views.top10_posts),
 
     # 用户
     path('user/register/', user_views.register),

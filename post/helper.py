@@ -25,7 +25,7 @@ def page_cache(timeout):
     return wrap1
 
 
-def get_post_rank():
+def get_post_rank(n):
     '''获取浏览量前 10 的文章列表'''
 
     # rank 的数据结构
@@ -37,7 +37,7 @@ def get_post_rank():
     #     (b'0', 2.0)
     # ]
     top10 = []
-    rank = rds.zrevrange('ReadRank', 0, 9, withscores=True)
+    rank = rds.zrevrange('ReadRank', 0, n - 1, withscores=True)
 
     # 低效的方式
     # for str_id, count in rank:
