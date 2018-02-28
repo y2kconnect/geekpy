@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 
 from user.models import User
 from user.forms import RegisterForm
+from post.helper import page_cache
 
 
 def login(request):
@@ -40,6 +41,7 @@ def register(request):
         return render(request, 'register.html')
 
 
+@page_cache(10)
 def user_info(request):
     uid = request.session['uid']
     user = User.objects.get(id=uid)

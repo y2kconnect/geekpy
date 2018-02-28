@@ -1,9 +1,9 @@
 from math import ceil
 
 from django.shortcuts import render, redirect
-from django.core.cache import cache
 
 from post.models import Post
+from post.helper import page_cache
 
 
 def create_post(request):
@@ -16,16 +16,10 @@ def create_post(request):
         return render(request, 'create_post.html')
 
 
+@page_cache(15)
 def read_post(request):
     post_id = int(request.GET.get('post_id', 0))
-
-    key = 'Post-%s' % post_id
-    post = cache.get(key)  # 首先检查缓存
-    if post is None:
-        print('get post %s from db' % post_id)
-        post = Post.objects.get(id=post_id)
-        cache.set(key, post, 86400)
-
+    post = Post.objects.get(id=post_id)
     return render(request, 'read_post.html', {'post': post})
 
 
@@ -40,9 +34,6 @@ def edit_post(request):
         post.title = title
         post.content = content
         post.save()
-        # 修改缓存
-        key = 'Post-%s' % post_id
-        cache.set(key, post, 86400)
         return redirect('/post/read/?post_id=%s' % post.id)
     else:
         post_id = int(request.GET.get('post_id', 0))
