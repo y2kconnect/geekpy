@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 
 from post.models import Post
 from post.helper import page_cache
+from post.helper import rds
 
 
 def create_post(request):
@@ -20,6 +21,7 @@ def create_post(request):
 def read_post(request):
     post_id = int(request.GET.get('post_id', 0))
     post = Post.objects.get(id=post_id)
+    rds.zincrby('ReadRank', post_id)  # 记录阅读量到 redis
     return render(request, 'read_post.html', {'post': post})
 
 
