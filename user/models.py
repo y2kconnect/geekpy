@@ -8,7 +8,7 @@ class User(models.Model):
     icon = models.ImageField()
     age = models.IntegerField()
     sex = models.IntegerField()
-    perm = models.IntegerField(default=0)
+    perm_id = models.IntegerField()
 
     def verify_password(self, password):
         return check_password(password, self.password)
@@ -17,3 +17,9 @@ class User(models.Model):
         if not self.password.startswith('pbkdf2_'):
             self.password = make_password(self.password)
         super().save()
+
+
+class Permission(models.Model):
+    '''权限'''
+    name = models.CharField(max_length=64, unique=True, null=False, blank=False)
+    perm = models.IntegerField(default=0)

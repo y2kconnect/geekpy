@@ -9,7 +9,7 @@ from post.helper import get_post_rank
 from user.helper import check_perm
 
 
-@check_perm(2)
+@check_perm('user')
 def create_post(request):
     if request.method == 'POST':
         title = request.POST.get('title')
@@ -31,7 +31,7 @@ def read_post(request):
                   {'post': post, 'comments': comments, 'tags': tags})
 
 
-@check_perm(2)
+@check_perm('user')
 def edit_post(request):
     if request.method == 'POST':
         # 获取提交参数
@@ -53,6 +53,11 @@ def edit_post(request):
         post = Post.objects.get(id=post_id)
         tags = ', '.join(t.name for t in post.get_tags())
         return render(request, 'edit_post.html', {'post': post, 'tags': tags})
+
+
+@check_perm('admin')
+def delete_post(request):
+    return render(request, 'delete_post.html')
 
 
 def post_list(request):
