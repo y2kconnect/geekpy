@@ -8,6 +8,7 @@ class User(models.Model):
     icon = models.ImageField()
     age = models.IntegerField()
     sex = models.IntegerField()
+    perm = models.IntegerField(default=0)
 
     def verify_password(self, password):
         return check_password(password, self.password)

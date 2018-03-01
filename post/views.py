@@ -6,8 +6,10 @@ from post.models import Post, Comment, Tag
 from post.helper import page_cache
 from post.helper import rds
 from post.helper import get_post_rank
+from user.helper import check_perm
 
 
+@check_perm(2)
 def create_post(request):
     if request.method == 'POST':
         title = request.POST.get('title')
@@ -18,7 +20,7 @@ def create_post(request):
         return render(request, 'create_post.html')
 
 
-# @page_cache(1)
+@page_cache(1)
 def read_post(request):
     post_id = int(request.GET.get('post_id', 0))
     post = Post.objects.get(id=post_id)
@@ -29,6 +31,7 @@ def read_post(request):
                   {'post': post, 'comments': comments, 'tags': tags})
 
 
+@check_perm(2)
 def edit_post(request):
     if request.method == 'POST':
         # 获取提交参数
