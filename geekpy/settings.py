@@ -46,8 +46,8 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'post.middleware.simple_middleware',
-    'post.middleware.request_rate',
+    # 'post.middleware.simple_middleware',
+    # 'post.middleware.request_rate',
 ]
 
 ROOT_URLCONF = 'geekpy.urls'

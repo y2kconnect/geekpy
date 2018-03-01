@@ -2,7 +2,7 @@ from math import ceil
 
 from django.shortcuts import render, redirect
 
-from post.models import Post
+from post.models import Post, Comment, Tag
 from post.helper import page_cache
 from post.helper import rds
 from post.helper import get_post_rank
@@ -18,12 +18,15 @@ def create_post(request):
         return render(request, 'create_post.html')
 
 
-@page_cache(15)
+# @page_cache(1)
 def read_post(request):
     post_id = int(request.GET.get('post_id', 0))
     post = Post.objects.get(id=post_id)
     rds.zincrby('ReadRank', post_id)  # 记录阅读量到 redis
-    return render(request, 'read_post.html', {'post': post})
+    comments = post.get_comments()
+    tags = post.get_tags()
+    return render(request, 'read_post.html',
+                  {'post': post, 'comments': comments, 'tags': tags})
 
 
 def edit_post(request):
@@ -37,11 +40,16 @@ def edit_post(request):
         post.title = title
         post.content = content
         post.save()
+        # 设置文章的 Tags
+        tags = request.POST.get('tags')
+        tags = [t.strip() for t in tags.split(',')]
+        post.update_tags(tags)
         return redirect('/post/read/?post_id=%s' % post.id)
     else:
         post_id = int(request.GET.get('post_id', 0))
         post = Post.objects.get(id=post_id)
-        return render(request, 'edit_post.html', {'post': post})
+        tags = ', '.join(t.name for t in post.get_tags())
+        return render(request, 'edit_post.html', {'post': post, 'tags': tags})
 
 
 def post_list(request):
@@ -64,3 +72,19 @@ def post_list(request):
 def top10_posts(request):
     top10 = get_post_rank(10)
     return render(request, 'top10.html', {'top10': top10})
+
+
+def comment(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        post_id = request.POST.get('post_id')
+        content = request.POST.get('content')
+        Comment.objects.create(pid=post_id, name=name, content=content)
+    return redirect('/post/read/?post_id=%s' % post_id)
+
+
+def tag_posts(request):
+    tag_id = int(request.GET.get('tag_id'))
+    tag = Tag.objects.get(id=tag_id)
+    posts = tag.get_posts()
+    return render(request, 'post_list.html', {'posts': posts})
