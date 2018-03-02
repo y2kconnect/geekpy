@@ -9,12 +9,12 @@ from post.helper import get_post_rank
 from user.helper import check_perm
 
 
-@check_perm('user')
+@check_perm('developer')
 def create_post(request):
     if request.method == 'POST':
         title = request.POST.get('title')
         content = request.POST.get('content')
-        post = Post.objects.create(title=title, content=content)
+        post = Post.objects.create(uid=request.session['uid'], title=title, content=content)
         return redirect('/post/read/?post_id=%s' % post.id)
     else:
         return render(request, 'create_post.html')
@@ -31,7 +31,7 @@ def read_post(request):
                   {'post': post, 'comments': comments, 'tags': tags})
 
 
-@check_perm('user')
+@check_perm('productor')
 def edit_post(request):
     if request.method == 'POST':
         # 获取提交参数

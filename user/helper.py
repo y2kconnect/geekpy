@@ -9,7 +9,7 @@ def check_perm(need_perm):
             uid = request.session.get('uid')
             if uid is not None:
                 user = User.objects.get(id=uid)
-                if user.perm >= need_perm:
+                if user.has_perm(need_perm):
                     return view_func(request, *args, **kwargs)
                 else:
                     return render(request, 'blockers.html')
